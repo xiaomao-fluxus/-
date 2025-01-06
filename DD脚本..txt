@@ -265,6 +265,6 @@ about:Button("伐木大亨1",function()
 loadstring(game:HttpGet("https://raw.githubusercontent.com/XiaoYunCN/UWU/main/LuaWare.lua", true))()
 end)
 
-local UITab13 = win:Tab("『lua』",'12771127467')
+local UITab11 = win:Tab("『云端持续更新！！！』",'12771127467')
 
-local about = UITab13:section("『lua』",true)
+local about = UITab11:section("『云端持续更新！！！』",true)
