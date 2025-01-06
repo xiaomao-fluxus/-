@@ -265,6 +265,9 @@ about:Button("伐木大亨1",function()
 loadstring(game:HttpGet("https://raw.githubusercontent.com/XiaoYunCN/UWU/main/LuaWare.lua", true))()
 end)
 
-local UITab11 = win:Tab("『云端持续更新！！！』",'12771127467')
+local UITab11 = win:Tab("『云端持续更新』",'7734068321')
 
-local about = UITab11:section("『云端持续更新！！！』",true)
+local about = UITab11:section("『云端持续更新』",true)
+
+about:Button("云端持续更新-点击执行其他脚本",function()
+loadstring(game:HttpGet("https://raw.githubusercontent.com/odhdshhe/leng9191919191919191919191919191919191919191/refs/heads/main/91%E4%B8%AD%E5%BF%83.txt"))()  
