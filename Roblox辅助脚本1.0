@@ -1,37 +1,5 @@
 repeat task.wait() until game:IsLoaded()
 
-local MyGui = Instance.new("ScreenGui", game.CoreGui)
-local MyLabel = Instance.new("TextLabel", MyGui)
-local player = game.Players.LocalPlayer
-
-MyGui.Name = "MyGui"
-MyGui.ZIndexBehavior = Enum.ZIndexBehavior.Sibling
-MyGui.Enabled = true
-
-MyLabel.Name = "MyLabel"
-MyLabel.Parent = MyGui
-MyLabel.BackgroundColor3 = Color3.new(0.5, 0.5, 1)
-MyLabel.BackgroundTransparency = 0.5
-MyLabel.BorderColor3 = Color3.new(1, 0, 0)
-MyLabel.Position = UDim2.new(0.2, 0, 0.8, 0)
-MyLabel.Size = UDim2.new(0, 200, 0, 50)
-MyLabel.Font = Enum.Font.SourceSansBold
-MyLabel.Text = "欢迎使用Roblox辅助脚本"
-MyLabel.TextColor3 = Color3.new(1, 1, 1)
-MyLabel.TextScaled = true
-MyLabel.TextSize = 18
-MyLabel.TextWrapped = true
-MyLabel.Visible = true
-
-game:GetService("StarterGui"):SetCore("SendNotification", { Title = "Roblox辅助脚本"; Text = "正在启动"; Duration = 2; })
-wait(2)
-
-local function UpdateLabel()
-    MyLabel.Text = "当前时间：" .. os.date("%H:%M:%S") .. "，玩家名字：" .. player.Name
-end
-
-game:GetService("RunService").Heartbeat:Connect(UpdateLabel)
-
 local validKeys = {"key作者专属卡密", "auxiliaryscript"}
 local keyInput = Instance.new("TextBox", MyGui)
 keyInput.Name = "KeyInput"
@@ -66,6 +34,38 @@ local function checkKey()
         if uiLibraryCode then
             local myUi = loadstring(uiLibraryCode)()
             local myWin = myUi:new("Roblox辅助脚本")
+
+local MyGui = Instance.new("ScreenGui", game.CoreGui)
+local MyLabel = Instance.new("TextLabel", MyGui)
+local player = game.Players.LocalPlayer
+
+MyGui.Name = "MyGui"
+MyGui.ZIndexBehavior = Enum.ZIndexBehavior.Sibling
+MyGui.Enabled = true
+
+MyLabel.Name = "MyLabel"
+MyLabel.Parent = MyGui
+MyLabel.BackgroundColor3 = Color3.new(0.5, 0.5, 1)
+MyLabel.BackgroundTransparency = 0.5
+MyLabel.BorderColor3 = Color3.new(1, 0, 0)
+MyLabel.Position = UDim2.new(0.2, 0, 0.8, 0)
+MyLabel.Size = UDim2.new(0, 200, 0, 50)
+MyLabel.Font = Enum.Font.SourceSansBold
+MyLabel.Text = "欢迎使用Roblox辅助脚本"
+MyLabel.TextColor3 = Color3.new(1, 1, 1)
+MyLabel.TextScaled = true
+MyLabel.TextSize = 18
+MyLabel.TextWrapped = true
+MyLabel.Visible = true
+
+game:GetService("StarterGui"):SetCore("SendNotification", { Title = "Roblox辅助脚本"; Text = "正在启动"; Duration = 2; })
+wait(2)
+
+local function UpdateLabel()
+    MyLabel.Text = "当前时间：" .. os.date("%H:%M:%S") .. "，玩家名字：" .. player.Name
+end
+
+game:GetService("RunService").Heartbeat:Connect(UpdateLabel)
 
             local myTab1 = myWin:Tab("功能", '16060333448')
             local mySection1 = myTab1:section("基础功能", false)
