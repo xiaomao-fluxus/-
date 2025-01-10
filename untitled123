@@ -1,0 +1,73 @@
+local MyGui = Instance.new("ScreenGui", game.CoreGui)
+local MyLabel = Instance.new("TextLabel", MyGui)
+local player = game.Players.LocalPlayer
+
+MyGui.Name = "MyGui"
+MyGui.ZIndexBehavior = Enum.ZIndexBehavior.Sibling
+MyGui.Enabled = true
+MyLabel.Name = "MyLabel"
+MyLabel.Parent = MyGui
+MyLabel.BackgroundColor3 = Color3.new(0.5, 0.5, 1)
+MyLabel.BackgroundTransparency = 0.5
+MyLabel.BorderColor3 = Color3.new(1, 0, 0)
+MyLabel.Position = UDim2.new(0.2, 0, 0.8, 0)
+MyLabel.Size = UDim2.new(0, 200, 0, 50)
+MyLabel.Font = Enum.Font.SourceSansBold
+MyLabel.Text = "欢迎使用我的脚本"
+MyLabel.TextColor3 = Color3.new(1, 1, 1)
+MyLabel.TextScaled = true
+MyLabel.TextSize = 18
+MyLabel.TextWrapped = true
+MyLabel.Visible = true
+
+game:GetService("StarterGui"):SetCore("SendNotification",{ Title = "我的脚本"; Text ="正在启动"; Duration = 2; })
+wait(2)
+game:GetService("StarterGui"):SetCore("SendNotification",{ Title = "我的脚本"; Text ="启动成功"; Duration = 3; })
+
+local function UpdateLabel()
+    MyLabel.Text = "当前时间："..os.date("%H:%M:%S").."，玩家名字："..player.Name
+end
+
+game:GetService("RunService").Heartbeat:Connect(UpdateLabel)
+
+local myUi = loadstring(game:HttpGet("https://raw.githubusercontent.com/xcmsnd/DrRay-UI-Library/refs/heads/main/61%E7%A0%81.txt"))()
+local myWin = myUi:new("我的脚本")
+
+local myTab1 = myWin:Tab("功能",'16060333448')
+
+local mySection1 = myTab1:section("基础功能",false)
+
+mySection1:Button("显示玩家信息",function()
+    local info = "玩家名："..player.Name.."\n账号年龄："..player.AccountAge.."天"
+    game:GetService("StarterGui"):SetCore("SendNotification",{ Title = "玩家信息"; Text =info; Duration = 5; })
+end)
+
+mySection1:Button("改变角色颜色",function()
+    player.Character.HumanoidDisplayDistanceType = Enum.HumanoidDisplayDistanceType.None
+    player.Character.HumanoidMesh:Destroy()
+    for _, child in ipairs(player.Character:GetChildren()) do
+        if child:IsA("BasePart") then
+            child.BrickColor = BrickColor.new("Bright red")
+        end
+    end
+end)
+
+local myTab2 = myWin:Tab("游戏辅助",'16060333448')
+
+local mySection2 = myTab2:section("移动辅助",true)
+
+mySection2:Slider('设置步行速度', 'WalkSpeed', game.Players.LocalPlayer.Character.Humanoid.WalkSpeed, 16, 300,false, function(Speed)
+    game.Players.LocalPlayer.Character.Humanoid.WalkSpeed = Speed
+end)
+
+mySection2:Slider("设置跳跃高度", "JumpPower", game.Players.LocalPlayer.Character.Humanoid.JumpPower, 50, 400, false, function(Jump)
+    game.Players.LocalPlayer.Character.Humanoid.JumpPower = Jump
+end)
+
+mySection2:Toggle("自动跳跃", "AutoJump",false,function(Value)
+    if Value then
+        game.Players.LocalPlayer.Character.Humanoid.Jump = true
+    else
+        game.Players.LocalPlayer.Character.Humanoid.Jump = false
+    end
+end)
