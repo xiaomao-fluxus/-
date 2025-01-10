@@ -1,0 +1,155 @@
+repeat task.wait() until game:IsLoaded()
+
+local MyGui = Instance.new("ScreenGui", game.CoreGui)
+local MyLabel = Instance.new("TextLabel", MyGui)
+local player = game.Players.LocalPlayer
+
+MyGui.Name = "MyGui"
+MyGui.ZIndexBehavior = Enum.ZIndexBehavior.Sibling
+MyGui.Enabled = true
+
+MyLabel.Name = "MyLabel"
+MyLabel.Parent = MyGui
+MyLabel.BackgroundColor3 = Color3.new(0.5, 0.5, 1)
+MyLabel.BackgroundTransparency = 0.5
+MyLabel.BorderColor3 = Color3.new(1, 0, 0)
+MyLabel.Position = UDim2.new(0.2, 0, 0.8, 0)
+MyLabel.Size = UDim2.new(0, 200, 0, 50)
+MyLabel.Font = Enum.Font.SourceSansBold
+MyLabel.Text = "欢迎使用Roblox辅助脚本"
+MyLabel.TextColor3 = Color3.new(1, 1, 1)
+MyLabel.TextScaled = true
+MyLabel.TextSize = 18
+MyLabel.TextWrapped = true
+MyLabel.Visible = true
+
+game:GetService("StarterGui"):SetCore("SendNotification", { Title = "Roblox辅助脚本"; Text = "正在启动"; Duration = 2; })
+wait(2)
+
+local function UpdateLabel()
+    MyLabel.Text = "当前时间：" .. os.date("%H:%M:%S") .. "，玩家名字：" .. player.Name
+end
+
+game:GetService("RunService").Heartbeat:Connect(UpdateLabel)
+
+local validKeys = {"key作者专属卡密", "auxiliaryscript"}
+local keyInput = Instance.new("TextBox", MyGui)
+keyInput.Name = "KeyInput"
+keyInput.BackgroundColor3 = Color3.new(0.3, 0.3, 0.3)
+keyInput.Position = UDim2.new(0.35, 0, 0.4, 0)
+keyInput.Size = UDim2.new(0, 200, 0, 30)
+keyInput.Font = Enum.Font.SourceSansBold
+keyInput.TextColor3 = Color3.new(1, 1, 1)
+keyInput.TextSize = 18
+keyInput.PlaceholderText = "请输入卡密"
+keyInput.ClearTextOnFocus = false
+
+local keyButton = Instance.new("TextButton", MyGui)
+keyButton.Name = "KeyButton"
+keyButton.BackgroundColor3 = Color3.new(0.2, 0.6, 0.2)
+keyButton.Position = UDim2.new(0.35, 0, 0.45, 0)
+keyButton.Size = UDim2.new(0, 200, 0, 30)
+keyButton.Font = Enum.Font.SourceSansBold
+keyButton.Text = "验证卡密"
+keyButton.TextColor3 = Color3.new(1, 1, 1)
+keyButton.TextSize = 18
+
+local function checkKey()
+    local inputKey = keyInput.Text
+    if table.find(validKeys, inputKey) then
+        game:GetService("StarterGui"):SetCore("SendNotification", { Title = "卡密验证"; Text = "卡密验证成功！"; Duration = 3; })
+        keyInput:Destroy()
+        keyButton:Destroy()
+        local uiLibraryUrl = "https://raw.githubusercontent.com/xcmsnd/DrRay-UI-Library/refs/heads/main/61%E7%A0%81.txt"
+        local uiLibraryCode = game:HttpGet(uiLibraryUrl, true)
+
+        if uiLibraryCode then
+            local myUi = loadstring(uiLibraryCode)()
+            local myWin = myUi:new("Roblox辅助脚本")
+
+            local myTab1 = myWin:Tab("功能", '16060333448')
+            local mySection1 = myTab1:section("基础功能", false)
+
+            mySection1:Button("显示玩家信息", function()
+                local info = "玩家名：" .. player.Name .. "\n账号年龄：" .. player.AccountAge .. "天"
+                game:GetService("StarterGui"):SetCore("SendNotification", { Title = "玩家信息"; Text = info; Duration = 5; })
+            end)
+
+            mySection1:Button("改变角色颜色", function()
+                player.Character.HumanoidDisplayDistanceType = Enum.HumanoidDisplayDistanceType.None
+                player.Character.HumanoidMesh:Destroy()
+                for _, child in ipairs(player.Character:GetChildren()) do
+                    if child:IsA("BasePart") then
+                        child.BrickColor = BrickColor.new("Bright red")
+                    end
+                end
+                game:GetService("StarterGui"):SetCore("SendNotification", { Title = "操作成功"; Text = "角色颜色已改变"; Duration = 3; })
+            end)
+
+            mySection1:Toggle("自动跳跃", "AutoJump", false, function(Value)
+                if Value then
+                    player.Character.Humanoid.Jump = true
+                    game:GetService("StarterGui"):SetCore("SendNotification", { Title = "自动跳跃"; Text = "自动跳跃已开启"; Duration = 2; })
+                else
+                    player.Character.Humanoid.Jump = false
+                    game:GetService("StarterGui"):SetCore("SendNotification", { Title = "自动跳跃"; Text = "自动跳跃已关闭"; Duration = 2; })
+                end
+            end)
+
+            mySection1:Toggle("无敌模式", "GodMode", false, function(Value)
+                if Value then
+                    player.Character.Humanoid.MaxHealth = 10000
+                    player.Character.Humanoid.Health = 10000
+                    game:GetService("StarterGui"):SetCore("SendNotification", { Title = "无敌模式"; Text = "无敌模式已开启"; Duration = 2; })
+                else
+                    player.Character.Humanoid.MaxHealth = 100
+                    player.Character.Humanoid.Health = 100
+                    game:GetService("StarterGui"):SetCore("SendNotification", { Title = "无敌模式"; Text = "无敌模式已关闭"; Duration = 2; })
+                end
+            end)
+
+            mySection1:Toggle("飞行模式", "FlyMode", false, function(Value)
+                if Value then
+                    player.Character.Humanoid:ChangeState(Enum.HumanoidStateType.Flying)
+                    game:GetService("StarterGui"):SetCore("SendNotification", { Title = "飞行模式"; Text = "飞行模式已开启"; Duration = 2; })
+                else
+                    player.Character.Humanoid:ChangeState(Enum.HumanoidStateType.Running)
+                    game:GetService("StarterGui"):SetCore("SendNotification", { Title = "飞行模式"; Text = "飞行模式已关闭"; Duration = 2; })
+                end
+            end)
+
+            local myTab2 = myWin:Tab("游戏辅助", '16060333448')
+            local mySection2 = myTab2:section("移动辅助", true)
+
+            mySection2:Slider('设置步行速度', 'WalkSpeed', game.Players.LocalPlayer.Character.Humanoid.WalkSpeed, 16, 300, false, function(Speed)
+                game.Players.LocalPlayer.Character.Humanoid.WalkSpeed = Speed
+                game:GetService("StarterGui"):SetCore("SendNotification", { Title = "步行速度"; Text = "步行速度已设置为 " .. Speed; Duration = 2; })
+            end)
+
+            mySection2:Slider("设置跳跃高度", "JumpPower", game.Players.LocalPlayer.Character.Humanoid.JumpPower, 50, 400, false, function(Jump)
+                game.Players.LocalPlayer.Character.Humanoid.JumpPower = Jump
+                game:GetService("StarterGui"):SetCore("SendNotification", { Title = "跳跃高度"; Text = "跳跃高度已设置为 " .. Jump; Duration = 2; })
+            end)
+
+            mySection2:Button("重置步行速度和跳跃高度", function()
+                game.Players.LocalPlayer.Character.Humanoid.WalkSpeed = 16
+                game.Players.LocalPlayer.Character.Humanoid.JumpPower = 50
+                game:GetService("StarterGui"):SetCore("SendNotification", { Title = "重置成功"; Text = "步行速度和跳跃高度已重置"; Duration = 3; })
+            end)
+            
+            local myTab2 = myWin:Tab("脚本辅助", '16060333448')
+            local mySection2 = myTab2:section("脚本辅助", true)
+            
+            mySection2:Button("91中心", function()
+            loadstring(game:HttpGet("https://raw.githubusercontent.com/odhdshhe/leng9191919191919191919191919191919191919191/refs/heads/main/91%E4%B8%AD%E5%BF%83.txt"))()
+            
+            game:GetService("StarterGui"):SetCore("SendNotification", { Title = "我的脚本"; Text = "启动成功"; Duration = 3; })
+        else
+            game:GetService("StarterGui"):SetCore("SendNotification", { Title = "我的脚本"; Text = "UI库加载失败，请检查网络连接"; Duration = 5; })
+        end
+    else
+        game:GetService("StarterGui"):SetCore("SendNotification", { Title = "卡密验证"; Text = "卡密验证失败，请输入正确的卡密"; Duration = 3; })
+    end
+end
+
+keyButton.MouseButton1Click:Connect
